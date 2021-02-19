@@ -14,6 +14,15 @@ enum WatcherType {
   VIDEO
 }
 
+const printObject = (obj: any) => {
+  const keys = Object.keys(obj);
+  console.log('{')
+  keys.forEach((k) => {
+    console.log(`${k}: ${obj[k]}`)    
+  })
+  console.log('}')
+}
+
 let thumbWatcher: fs.FSWatcher
 let videoWatcher: fs.FSWatcher
 
@@ -24,17 +33,30 @@ fs.readFile(path.join(__dirname, "data", "config.json"), (err, data) => {
   newWatcher(app, videoWatcher, config.videoPath, config.videoFilter, WatcherType.VIDEO)
 })
 
+const sortedIndex = (array: Video[], value: Video) => {
+	var low = 0,
+		high = array.length;
+
+	while (low < high) {
+		var mid = low + high >>> 1;
+		if (array[mid].id.localeCompare(value.id) < 0) low = mid + 1;
+		else high = mid;
+	}
+	return low;
+}
+
 const fileChange = (type:WatcherType, evt: string, name: string | Buffer) => {
-  const key = (name as string).split('.').slice(0,-1).join(".");
+  const filename = path.basename(name as string);
+  const key = filename.split('.').slice(0,-1).join(".");
   switch(type) {
     case WatcherType.THUMBNAIL:
       switch(evt) {
         case "update":
           const v = videoLookup[key];
           if(v)
-            v.thumbnail = name as string;
+            v.thumbnail = filename;
           else
-            looseThumbnails[key] = name as string;
+            looseThumbnails[key] = filename;
         break;
         default:
           break;
@@ -47,13 +69,15 @@ const fileChange = (type:WatcherType, evt: string, name: string | Buffer) => {
           const video = {
             timestamp: "", // TODO: parse timestamp
             thumbnail: "",
-            video: name as string,
+            video: filename,
             id: key,
           };
           if(looseThumbnails[key])
             video.thumbnail = looseThumbnails[key]
-          videos.push(video)
+          videos.splice(sortedIndex(videos, video) + 1, 0, video);
           videoLookup[key] = video
+          console.log(`pushed video:`)
+          printObject(video)
         break;
         default:
           break;
@@ -105,7 +129,6 @@ function newWatcher (app: any, watcher: fs.FSWatcher, watchPath: string, filter:
 
 }
 
-
 const pages = [
   {route: '/', name: "Live", view: "index"},
   {route: '/gallery', name: "Gallery", view: "index"},
@@ -136,7 +159,16 @@ app.get('/thumb/:id', (req, res, next) => {
 
 pages.forEach((page, i) => {
   app.get(page.route, (req, res) => {
-    res.render(page.view, {pages, page: page.route, config, videos}) // TODO: do videos with ajax
+    let params: any = {pages, page: page.route, config};
+    switch(page.route) {
+      case "/":
+        params.videos = videos.slice(0,10);
+      break;
+      case "/gallery":
+        params.videos = videos;
+      break;
+    }
+    res.render(page.view, params) // TODO: do videos with ajax
   })
 })
 
