@@ -91,7 +91,7 @@ function newWatcher (app: any, watcher: fs.FSWatcher, watchPath: string, filter:
   if(!fs.existsSync(watchPath)) return console.log('file not found');
   let filt: any;
   if(filter == '') filt = () => true;
-  else filt = new RegExp(filter);
+  else filt = (t:string) => new RegExp(filter).test(t);
   if(watcher != undefined) {
     console.log('closing old watcher...')
     watcher.close();
@@ -109,6 +109,7 @@ function newWatcher (app: any, watcher: fs.FSWatcher, watchPath: string, filter:
           throw err;
       }
       files.forEach(file => {
+        if(!filt(file)) return;
         fileChange(type, "update", file)
         console.log(`cold loaded '${file}'`)
       });
