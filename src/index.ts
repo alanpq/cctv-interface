@@ -48,6 +48,7 @@ const fileChange = (type:WatcherType, evt: string, name: string | Buffer) => {
             timestamp: "", // TODO: parse timestamp
             thumbnail: "",
             video: name as string,
+            id: key,
           };
           if(looseThumbnails[key])
             video.thumbnail = looseThumbnails[key]
@@ -119,7 +120,6 @@ app.use(express.static("public"))
 app.get('/video/:id', (req, res, next) => {
   const v = videoLookup[req.params.id]
   if(v == undefined) return res.status(404).send("not found");
-  console.log(path.join(config.videoPath, v.video))
   
   req.url = v.video;
   express.static(config.videoPath)(req, res, next);
@@ -128,6 +128,7 @@ app.get('/video/:id', (req, res, next) => {
 app.get('/thumb/:id', (req, res, next) => {
   const v = videoLookup[req.params.id]
   if(v == undefined) return res.status(404).send("not found");
+  if(v.thumbnail == "") return res.status(404).send("not found");
   
   req.url = v.thumbnail;
   express.static(config.thumbnailPath)(req, res, next);
@@ -135,7 +136,6 @@ app.get('/thumb/:id', (req, res, next) => {
 
 pages.forEach((page, i) => {
   app.get(page.route, (req, res) => {
-    console.log(JSON.stringify(config))
     res.render(page.view, {pages, page: page.route, config, videos}) // TODO: do videos with ajax
   })
 })

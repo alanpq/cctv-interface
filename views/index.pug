@@ -9,5 +9,5 @@ block content
   ul
     each vid in videos 
       li
-        a(href=vid.video)
-          img(src=vid.thumbnail)
+        a(href=`/video/${vid.id}`)
+          img(src=`/thumb/${vid.id}`)

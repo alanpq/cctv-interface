@@ -2,6 +2,7 @@ export interface Video {
   timestamp: string,
   thumbnail: string,
   video: string,
+  id: string,
 }
 
 export const videos: Video[] = [];
