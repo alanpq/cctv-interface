@@ -136,7 +136,7 @@ app.get('/thumb/:id', (req, res, next) => {
 pages.forEach((page, i) => {
   app.get(page.route, (req, res) => {
     console.log(JSON.stringify(config))
-    res.render(page.view, {pages, page: page.route, config})
+    res.render(page.view, {pages, page: page.route, config, videos}) // TODO: do videos with ajax
   })
 })
 

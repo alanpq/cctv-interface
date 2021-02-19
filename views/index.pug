@@ -7,5 +7,7 @@ block head
 block content 
   img(src=config.streamURL)
   ul
-    li fuck you
-    li luka
+    each vid in videos 
+      li
+        a(href=vid.video)
+          img(src=vid.thumbnail)
