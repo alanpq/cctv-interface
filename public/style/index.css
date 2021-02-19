@@ -1,0 +1,28 @@
+main {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  grid-template-areas: "feed" "list";
+  gap: 20px;
+}
+
+main img {
+  justify-self: center;
+  height: 100%;
+  grid-area: feed;
+}
+
+main ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  grid-area: list;
+
+  background: var(--bg2);
+}
+
+main ul li {
+  height: 100%;
+}

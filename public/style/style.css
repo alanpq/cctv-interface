@@ -1,3 +1,90 @@
-html {
-  background-color: red;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+:root {
+  --bg1: rgb(28, 28, 29);
+  --bg2: rgb(44, 44, 46);
+  --bg3: rgb(56, 56, 59);
+  --bg4: rgb(80, 81, 85);
+  --bg5: rgb(102, 104, 109);
+
+  --fg1: white;
+  --fg2: rgb(224, 219, 206);
+  --fg3: rgb(182, 178, 168);
+  --fg4: rgb(136, 133, 125);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  padding: 1px 2px;
+  color: var(--fg2);
+  border-bottom: 1px solid currentColor;
+
+  cursor: pointer;
+  text-decoration: none;
+}
+a:hover {
+  color: var(--bg2);
+  background: var(--fg2);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg1);
+  color: var(--fg1);
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: auto;
+  grid-template-areas: 
+    "head"
+    "main"
+    "footer";
+}
+
+nav {
+  height: 100%;
+  grid-area: head;
+  display: flex;
+  flex-direction: row;
+}
+
+span.grow {
+  flex-grow: 1;
+}
+
+nav a {
+  padding: 10px 15px;
+  border: none;
+}
+
+nav a.selected {
+  background: var(--fg2);
+  color: var(--bg2);
+}
+
+nav a:not(.title) {
+  border-right: 1px solid rgba(255, 255, 255, 0.144);
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+}
+
+nav a.title:hover {
+  background: unset;
+  color: var(--fg1);
+}
+
+main {
+  margin: 10px 20px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
 }

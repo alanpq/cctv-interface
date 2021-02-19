@@ -8,8 +8,15 @@ html(lang="en")
     link(rel="stylesheet", href="style/style.css")
     block head
   body
-    header
-      block header 
+    header 
+      nav
+        a.title Camera Web Interface 
+        span.grow
+        each p in pages 
+          if page == p.route
+            a.selected(href=p.route)=p.name 
+          else 
+            a(href=p.route)=p.name
     main
       block content
     footer 

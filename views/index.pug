@@ -1,4 +1,11 @@
 extends incl/base.pug
 
+block head 
+  link(rel="stylesheet", href="style/index.css")
+  script(src="js/index.js", defer) 
+
 block content 
-  h1 hey
+  img(src=config.streamURL)
+  ul
+    li fuck you
+    li luka

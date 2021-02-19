@@ -1,0 +1,11 @@
+extends incl/base.pug
+
+block head 
+  link(rel="stylesheet", href="style/config.css")
+  script(src="js/config.js", defer) 
+
+block content
+  form(action="javascript:void(0)", autocomplete="off")
+    each c in Object.keys(config)
+      label(for=c)=c
+      input(name=c, value=config[c])
