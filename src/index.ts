@@ -34,12 +34,13 @@ fs.readFile(path.join(__dirname, "data", "config.json"), (err, data) => {
 })
 
 const sortedIndex = (array: Video[], value: Video) => {
-	var low = 0,
-		high = array.length;
+	let low = 0,
+		high = array.length,
+    mid;
 
 	while (low < high) {
-		var mid = low + high >>> 1;
-		if (array[mid].id.localeCompare(value.id) < 0) low = mid + 1;
+		mid = (low + high) >>> 1;
+		if (array[mid].id.localeCompare(value.id) > 0) low = mid + 1;
 		else high = mid;
 	}
 	return low;
@@ -74,7 +75,7 @@ const fileChange = (type:WatcherType, evt: string, name: string | Buffer) => {
           };
           if(looseThumbnails[key])
             video.thumbnail = looseThumbnails[key]
-          videos.splice(sortedIndex(videos, video) + 1, 0, video);
+          videos.splice(sortedIndex(videos, video), 0, video);
           videoLookup[key] = video
           console.log(`pushed video:`)
           printObject(video)
