@@ -9,8 +9,15 @@ main {
 
 main img {
   justify-self: center;
-  height: 100%;
+  width: 100%;
   grid-area: feed;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  main img  {
+    width: auto;
+    height: 100%;
+  }
 }
 
 main ul {
