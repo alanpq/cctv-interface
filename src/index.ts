@@ -133,7 +133,7 @@ function newWatcher (app: any, watcher: fs.FSWatcher, watchPath: string, filter:
 
 const pages = [
   {route: '/', name: "Live", view: "index"},
-  {route: '/gallery', name: "Gallery", view: "index"},
+  {route: '/gallery', name: "Gallery", view: "gallery"},
   {route: '/config', name: "Configuration", view: "config"},
 ]
 app.set('view engine', 'pug')
