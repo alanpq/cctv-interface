@@ -1,0 +1,12 @@
+extends incl/base.pug
+
+block head 
+  link(rel="stylesheet", href="style/config.css")
+  script(src="js/gallery.js", defer) 
+
+block content
+  ul
+    each vid in videos
+      li
+        a(href=`/video/${vid.id}`)
+          img(src=`/thumb/${vid.id}`)
