@@ -38,6 +38,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@melt-ui/svelte": "^0.26.2"
+		"@melt-ui/svelte": "^0.26.2",
+		"clsx": "^2.0.0",
+		"tailwind-merge": "^1.14.0"
 	}
 }

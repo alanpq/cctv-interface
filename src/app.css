@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply h-full w-full;
+  }
   html, body {
+    @apply m-0 p-0 min-h-full min-w-full;
     @apply bg-white text-black;
     @apply dark:bg-slate-900 dark:text-white;
-
-    width: 100%;
-    height: 100%;
   }
+
 }
