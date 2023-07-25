@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import { browser } from "$app/environment";
+	import { writable } from "svelte/store";
+	import Switch from "../lib/components/Switch.svelte";
+	import { enabled } from "../lib/store/dark_theme";
+
+  
+
+</script>
+
+<img alt="live feed" src="http://192.168.1.28:8081" class="bg-slate-800"/>
+
+<Switch label="Dark Mode" name="dark-mode" bind:value={$enabled}/>
