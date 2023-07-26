@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cn } from '$lib/utils';
   import { createSwitch } from '@melt-ui/svelte';
   
   export let value = false;
@@ -9,15 +10,18 @@
 
   export let label = "";
   export let name = "";
+
+  let cl = "";
+  export {cl as class};
 </script>
 
-<section class="flex items-center">
+<section class={cn("flex items-center", cl)}>
   <label class="pr-4 leading-none" for={name}>
     {label}
   </label>
   <button
     melt={$root}
-    class="relative h-6 w-11 cursor-default rounded-full bg-sky-950 transition-colors data-[state=checked]:bg-slate-800"
+    class="relative h-6 w-11 cursor-default rounded-full bg-stone-800 transition-colors data-[state=checked]:bg-stone-700"
     id="airplane-mode"
   >
     <span

@@ -69,8 +69,6 @@ fs.readdir(VIDEO_PATH, (err, files) => {
 				if(videos[stamp].video != f) console.warn(`video already registered with timestamp '${stamp}', but pointing to a different file?`);
 				return; // already exists
 			}
-			let thumb: string | undefined;
-			// check if we saw the image for this video before we saw the video
 			
 			videos[stamp] = {
 				video: f,
@@ -96,6 +94,6 @@ const videos: {[stamp: string]: Video} = {};
 
 export const load = (async () => {
 	return {
-		videos: Object.values(videos),
+		videos: Object.values(videos).sort((a, b) => b.ts.getTime()-a.ts.getTime()),
 	};
 }) satisfies PageServerLoad;

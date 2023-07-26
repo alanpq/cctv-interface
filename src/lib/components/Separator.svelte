@@ -14,7 +14,7 @@
 <div
 	melt={$root}
 	class={cn(
-    'bg-slate-700',
-    orientation == 'vertical' ? 'h-4 w-[1px]' : 'my-3.5 mx-1 h-[1px] w-full'
+    'bg-stone-600 bg-clip-content',
+    orientation == 'vertical' ? 'h-4 w-[1px]' : 'my-3.5 px-2 h-[1px] w-full'
   )}
 />
