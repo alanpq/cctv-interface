@@ -10,17 +10,23 @@
 	let safe_thumb: string | undefined;
 	let video: Video | undefined;
 
+	const cctv_path = data.cctv_path;
+
 	const setVideo = (v: Video) => {
 		video = v;
 		safe_thumb = v.thumb ?? safe_thumb;
-	}
+	};
 </script>
-
 
 <main>
 	<section class="flex flex-row items-center justify-center bg-black">
 		{#if video}
-			<video src={`/cctv/${video.video}`} controls autoplay poster={`/cctv/${video.thumb ?? safe_thumb}`}></video>
+			<video
+				src={`${cctv_path}/${video.video}`}
+				controls
+				autoplay
+				poster={`${cctv_path}/${video.thumb ?? safe_thumb}`}
+			/>
 		{:else}
 			<img
 				alt="live feed"
@@ -31,13 +37,15 @@
 	</section>
 	<section class="p-1 flex">
 		{data.videos.length} videos.
-		<span class="flex-1"/>
+		<span class="flex-1" />
 		<Switch label="Dark Mode" name="dark-mode" bind:value={$enabled} />
 	</section>
-	
+
 	<article class="videos text-white overflow-y-auto">
 		{#each data.videos as v}
-			<button class="
+			{#if v.thumb}
+				<button
+					class="
 				flex
 				h-[9em]
 				w-[12em]
@@ -46,13 +54,14 @@
 				after:absolute after:inset-0
 				after:transition-opacity after:opacity-0
 				hover:after:opacity-50 after:bg-black"
-				class:after:opacity-80={video?.ts == v.ts}
-				style={`background-image: url(/cctv/${v.thumb})`}
-				on:click={setVideo(v)}
-			>
-				<p class="self-end text-center w-full">{v.ts_format}</p>
-				<!-- <img src={`/cctv/${v.thumb}`} class="max-h-[9em]" alt={v.ts_format}/> -->
-			</button>
+					class:after:opacity-80={video?.ts == v.ts}
+					style={`background-image: url(${cctv_path}/${v.thumb})`}
+					on:click={setVideo(v)}
+				>
+					<p class="self-end text-center w-full">{v.ts_format}</p>
+					<!-- <img src={`/cctv/${v.thumb}`} class="max-h-[9em]" alt={v.ts_format}/> -->
+				</button>
+			{/if}
 		{/each}
 	</article>
 </main>

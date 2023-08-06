@@ -23,6 +23,8 @@ const DAYS = [
 	"Sat",
 ]
 
+const CCTV_PATH = (env.CCTV_HOST ?? '') + (env.CCTV_PATH ?? '/cctv');
+
 const format_ts = (ts: Date) => {
 	return DAYS[ts.getDay()] + " " +
 	ts.getHours().toString().padStart(2, "0") + ":" +
@@ -95,5 +97,6 @@ const videos: {[stamp: string]: Video} = {};
 export const load = (async () => {
 	return {
 		videos: Object.values(videos).sort((a, b) => b.ts.getTime()-a.ts.getTime()),
+		cctv_path: CCTV_PATH,
 	};
 }) satisfies PageServerLoad;

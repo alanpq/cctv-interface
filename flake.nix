@@ -22,7 +22,7 @@
         packageJSON = pkgs.lib.importJSON ./package.json;
         gitignoreSource = gitignore.lib.gitignoreSource;
       in
-      {
+      rec {
         packages = rec {
           site-src = pkgs.mkYarnPackage rec {
             name = "${packageJSON.name}-site-${version}";
@@ -48,14 +48,20 @@
             };
           };
 
-          default = pkgs.writeShellApplication {
-            name = packageJSON.name;
-            runtimeInputs = [ site-src pkgs.nodejs ];
-            text = ''
-              node ${site-src}/libexec/${packageJSON.name}/deps/${packageJSON.name}/build
-            '';
-          };
+          dev = pkgs.writeShellScriptBin "dev" ''
+            nix develop --command yarn run concurrently \
+              "yarn dev --host" \
+              'source "$PWD/.env" && yarn serve-cctv $VIDEO_PATH'
+          '';
+
+          default = image;
         };
+
+        apps.default =
+          {
+            type = "app";
+            program = "${packages.dev}/bin/dev";
+          };
 
         devShell = pkgs.mkShell {
           buildInputs = [ pkgs.yarn pkgs.nodejs ];
