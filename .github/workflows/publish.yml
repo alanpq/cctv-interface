@@ -51,22 +51,19 @@ jobs:
           echo TAGS=$TAGS
           VERSION=${{ steps.meta.outputs.version }}
 
-          # Check if "latest" is among the tags, if not, add it.
-          echo "$TAGS" | grep -q 'latest' || TAGS+=" latest"
+          # # Check if "latest" is among the tags, if not, add it.
+          # echo "$TAGS" | grep -q 'latest' || TAGS+=" latest"
 
-          # Remove the image name from the tags.
-          TAGS=$(echo "$TAGS" | sed "s|ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME||g")          
+          # # Remove the image name from the tags.
+          # TAGS=$(echo "$TAGS" | sed "s|ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME||g")          
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           echo "(new) TAGS=$TAGS"
 
-          # Tag the image with the version.
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-
-          # Tag the image with all other tags.
+          # Tag the image with all tags.
           for tag in $TAGS; do
-            docker tag $IMAGE_NAME $IMAGE_ID:$tag
+            docker tag $IMAGE_NAME $tag
           done
 
           # Push the image with all tags.
