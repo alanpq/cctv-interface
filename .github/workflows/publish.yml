@@ -63,8 +63,9 @@ jobs:
 
           # Tag the image with all tags.
           for tag in $TAGS; do
+            echo tagging "$tag"...
             docker tag $IMAGE_NAME $tag
           done
 
           # Push the image with all tags.
-          docker push --all-tags $IMAGE_ID
+          docker push --all-tags ${TAGS%% *}
