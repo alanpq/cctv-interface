@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import {VIDEO_PATH} from "$env/static/private";
+import {env} from "$env/dynamic/private";
 
 export type Video = {
 	video: string,
@@ -49,7 +49,7 @@ const parse_ts = (stamp: string) => {
 }
 
 import * as fs from "fs";
-fs.readdir(VIDEO_PATH, (err, files) => {
+fs.readdir(env.VIDEO_PATH ?? "~/cctv", (err, files) => {
 	if(err) {
 		console.error("Failed to fetch videos -", err);
 		return;
