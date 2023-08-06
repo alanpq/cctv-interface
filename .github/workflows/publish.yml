@@ -59,7 +59,7 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo (new) TAGS=$TAGS
+          echo "(new) TAGS=$TAGS"
 
           # Tag the image with the version.
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
