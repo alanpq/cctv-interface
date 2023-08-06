@@ -38,7 +38,7 @@
 
           image = pkgs.dockerTools.buildLayeredImage {
             name = "${packageJSON.name}";
-            tag = packageJSON.version;
+            tag = "latest";
             contents = [ site-src pkgs.nodejs ];
             config = {
               Cmd = [ "node" "${site-src}/libexec/${packageJSON.name}/deps/${packageJSON.name}/build" ];
