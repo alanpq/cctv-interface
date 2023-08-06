@@ -1,7 +1,7 @@
 name: 'Publish Docker Image'
 on:
   push:
-    branches: ['remake']
+    branches: ['main']
 
 env:
   REGISTRY: ghcr.io
