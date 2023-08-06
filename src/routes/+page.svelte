@@ -3,7 +3,7 @@
 	import { enabled } from '../lib/store/dark_theme';
 	import Separator from '../lib/components/Separator.svelte';
 	import type { PageData } from './$types';
-	import type { Video } from './+page.server';
+	import type { Video } from '$lib/server/video_parsing';
 
 	export let data: PageData;
 
@@ -26,7 +26,9 @@
 				controls
 				autoplay
 				poster={`${cctv_path}/${video.thumb ?? safe_thumb}`}
-			/>
+			>
+				<track kind="captions" /></video
+			>
 		{:else}
 			<img
 				alt="live feed"
