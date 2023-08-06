@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -68,4 +68,4 @@ jobs:
           done
 
           # Push the image with all tags.
-          docker push --all-tags ${TAGS%% *}
+          docker push --all-tags $IMAGE_ID
