@@ -31,7 +31,7 @@ jobs:
       - uses: cachix/install-nix-action@v22
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - run: nix-build
+      - run: nix build
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
